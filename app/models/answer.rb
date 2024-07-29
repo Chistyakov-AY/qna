@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# Comment
 class Answer < ApplicationRecord
-  validates :body, :body, presence: true
-  
   belongs_to :question
+
+  validates :body, :body, presence: true
 end
