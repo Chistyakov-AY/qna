@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 # Comment
-module QuestionsHelper
+module AnswersHelper
 end
