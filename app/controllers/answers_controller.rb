@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# Comment
 class AnswersController < ApplicationController
   before_action :set_answer, only: [:show, :edit]
   before_action :set_question, only: [:create]

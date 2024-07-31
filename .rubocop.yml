@@ -25,7 +25,7 @@ Style/AsciiComments:
   Enabled: false
 
 Style/Documentation:
-  Enabled: true
+  Enabled: false
 
 Bundler/OrderedGems:
   Enabled: false
