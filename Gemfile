@@ -14,6 +14,7 @@ gem 'jbuilder'
 gem 'tzinfo-data', platforms: %i[windows jruby]
 gem 'bootsnap', require: false
 gem 'rubocop-rspec'
+gem 'slim-rails'
 
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]
