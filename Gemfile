@@ -15,6 +15,7 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 gem 'bootsnap', require: false
 gem 'rubocop-rspec'
 gem 'slim-rails'
+gem 'devise'
 
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]
@@ -32,4 +33,5 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
+  gem 'launchy'
 end
