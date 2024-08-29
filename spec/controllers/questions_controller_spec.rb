@@ -36,11 +36,6 @@ RSpec.describe QuestionsController, type: :controller do
     before { login(user) }
     before { get :new, params: { id: question } }
 
-    # before do
-    #   @request.env['devise.mapping'] = Devise.mappings[:user]
-    #   sign_in(user)
-    # end
-
     it 'assigns a new Question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
     end
@@ -72,7 +67,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirects to show view' do
         post :create, params: { question: attributes_for(:question) }
-        expect(response).to redirect_to assigns(:question)
+        expect(response).to redirect_to assigns(:questions)
       end
     end
 
@@ -116,8 +111,8 @@ RSpec.describe QuestionsController, type: :controller do
       it 'does not change question' do
         question.reload
 
-        expect(question.title).to eq 'MyString'
-        expect(question.body).to eq 'MyText'
+        expect(question.title).to eq 'Test title'
+        expect(question.body).to eq 'Test body'
       end
 
       it 're-renders edit view' do

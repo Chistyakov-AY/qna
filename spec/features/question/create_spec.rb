@@ -22,14 +22,15 @@ feature 'User can create question', %q{
       click_on 'Ask'
 
       expect(page).to have_content 'Your question was succesfully created'
+      expect(page).to have_content 'All questions:'
       expect(page).to have_content 'Test question'
-      expect(page).to have_content 'text text text'
     end
 
     scenario 'asks a question with errors' do
       click_on 'Ask'
-
+    
       expect(page).to have_content "Title can't be blank"
+      expect(page).to have_content "Body can't be blank"
     end
   end
 
