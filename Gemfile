@@ -14,7 +14,7 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 gem 'bootsnap', require: false
 gem 'rubocop-rspec'
 gem 'slim-rails'
-gem "hotwire-rails"
+gem 'hotwire-rails'
 gem 'jquery-rails'
 
 group :development, :test do
@@ -39,4 +39,3 @@ group :test do
   gem 'launchy'
   gem 'fuubar'
 end
-
