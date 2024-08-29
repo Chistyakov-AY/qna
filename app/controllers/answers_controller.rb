@@ -3,7 +3,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :find_answer, only: :destroy
-  before_action :find_question, except: [:show]
+  before_action :find_question, except: [:show, :destroy]
 
   def show; end
 
@@ -26,9 +26,9 @@ class AnswersController < ApplicationController
   def destroy
     if @answer.author == current_user
       @answer.destroy
-      redirect_to question_path(@question), notice: 'Your answer successfully destroy!'
+      redirect_to question_path(@answer.question), notice: 'Your answer successfully destroy!'
     else
-      redirect_to question_path(@question), notice: 'Only author can delete this answer!'
+      redirect_to question_path(@answer.question), notice: 'Only author can delete this answer!'
     end
   end
 
