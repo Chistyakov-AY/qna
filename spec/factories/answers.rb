@@ -2,8 +2,9 @@
 
 FactoryBot.define do
   factory :answer do
-    body { 'MyString' }
-    question_id { create(:question).id }
+    body { 'Test answer' }
+    question { association :question }
+    author { association :user }
 
     trait :invalid do
       body { nil }

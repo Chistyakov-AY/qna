@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Comment
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_question, only: [:show, :edit, :destroy, :update]
 
   def index
@@ -17,10 +17,10 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def create
-    @question = Question.new(question_params)
+    @question = current_user.questions.new(question_params)
 
     if @question.save
-      redirect_to @question
+      redirect_to questions_path, notice: 'Your question was succesfully created'
     else
       render :new
     end
@@ -35,8 +35,12 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    redirect_to question_path
+    if current_user.author_of?(@question)
+      @question.destroy
+      redirect_to root_path, notice: 'Your question was succesfully destroy!'
+    else
+      redirect_to question_path(@question), notice: 'Only author can delete a question!'
+    end
   end
 
   private

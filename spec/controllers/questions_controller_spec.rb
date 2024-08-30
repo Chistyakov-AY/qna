@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question) }
+  let(:user) { create(:user) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3) }
@@ -32,7 +33,10 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
-    before { get :new }
+    before do
+      login(user)
+      get :new, params: { id: question }
+    end
 
     it 'assigns a new Question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
@@ -44,7 +48,10 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
-    before { get :edit, params: { id: question } }
+    before do
+      login(user)
+      get :edit, params: { id: question }
+    end
 
     it 'assigns the requested question to @question' do
       expect(assigns(:question)).to eq question
@@ -56,6 +63,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
+    before { login(user) }
+
     context 'with valid attributes' do
       it 'saves a new question in the database' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
@@ -63,7 +72,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirects to show view' do
         post :create, params: { question: attributes_for(:question) }
-        expect(response).to redirect_to assigns(:question)
+        expect(response).to redirect_to assigns(:questions)
       end
     end
 
@@ -80,6 +89,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update' do
+    before { login(user) }
+
     context 'with valid attributes' do
       it 'assigns the requested question to @question' do
         patch :update, params: { id: question, question: attributes_for(:question) }
@@ -106,8 +117,8 @@ RSpec.describe QuestionsController, type: :controller do
       it 'does not change question' do
         question.reload
 
-        expect(question.title).to eq 'MyString'
-        expect(question.body).to eq 'MyText'
+        expect(question.title).to eq 'Test title'
+        expect(question.body).to eq 'Test body'
       end
 
       it 're-renders edit view' do
