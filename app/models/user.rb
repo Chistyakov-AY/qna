@@ -13,4 +13,3 @@ class User < ApplicationRecord
     resource.author == self
   end
 end
-4
