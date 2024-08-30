@@ -26,4 +26,10 @@ feature 'User can delete answer' do
       expect(page).to have_content 'Only author can delete this answer!'
     end
   end
+
+  scenario 'Unauthenticated user delete answer' do
+    visit question_path(question)
+
+    expect(page).not_to have_link 'Delete answer'
+  end
 end
