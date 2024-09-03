@@ -27,7 +27,7 @@ feature 'User can create question', '
       expect(page).to have_content 'Test question'
     end
 
-    scenario 'asks a question with errors' do
+    scenario 'asks a question with errors', :js do
       click_on 'Ask'
 
       expect(page).to have_content "Title can't be blank"

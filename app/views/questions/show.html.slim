@@ -13,6 +13,9 @@ h4= "Описание вопроса:  "
 h4= "Все ответы на вопрос: "
 = render partial: 'answers/answers', collection: @question.answers
 
+.answer-errors
+  = render 'shared/errors', resource: @answer
+  
 = render 'answers/form', collection: @answer
 
 p= link_to 'Back', questions_path

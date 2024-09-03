@@ -39,7 +39,7 @@ class QuestionsController < ApplicationController
       @question.destroy
       redirect_to root_path, notice: 'Your question was succesfully destroy!'
     else
-      redirect_to question_path(@question), notice: 'Only author can delete a question!'
+      redirect_to question_path(@question), notice: 'Only author can delete this question!'
     end
   end
 

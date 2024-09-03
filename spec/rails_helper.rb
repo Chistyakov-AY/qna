@@ -22,6 +22,8 @@ RSpec.configure do |config|
   config.include ControllerHelpers, type: :controller
   config.include FeatureHelpers, type: :feature
 
+  Capybara.javascript_driver = :selenium_chrome
+
   config.fixture_paths = [
     Rails.root.join('spec/fixtures')
   ]
