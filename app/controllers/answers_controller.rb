@@ -3,18 +3,18 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :find_answer, only: :destroy
-  before_action :find_question, except: [:show, :destroy]
+  before_action :find_question, except: [:show, :destroy, :new]
 
-  def show; end
+  # def show; end
 
   def new
     @answer = Answer.new
   end
 
-  def edit; end
+  # def edit; end
 
   def create
-    @answer = @question.answers.new(answer_params)
+    @answer = @question.answers.create(answer_params)
     @answer.author = current_user
     if @answer.save
       redirect_to question_path(@question), notice: 'Answer was succesfully created'

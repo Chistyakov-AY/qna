@@ -1,21 +1,26 @@
-
 p
   | Просмотр вопроса с ответами!
 
 h3= "Вопрос:  "
 p= @question.title
 - if current_user.present?
-  = link_to 'Delete question', question_path(@question), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }
+  => link_to 'Delete', question_path(@question), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }
+  = link_to 'Edit', edit_question_path(@question)
 
 h4= "Описание вопроса:  "
 = @question.body
     
 h4= "Все ответы на вопрос: "
-= render partial: 'answers/answers', collection: @question.answers
+.answers
+  - @question.answers.each do |answer|
+    p= answer.body
 
 .answer-errors
   = render 'shared/errors', resource: @answer
   
-= render 'answers/form', collection: @answer
+= form_with model: [@question, @answer] do |f|
+  = f.label :body
+  = f.text_area :body
+  = f.submit 'Create answer'
 
 p= link_to 'Back', questions_path

@@ -13,7 +13,7 @@ feature 'User can delete answer' do
       sign_in(author)
       visit question_path(question)
 
-      click_on 'Delete answer'
+      click_on 'Delete'
 
       expect(page).to have_content 'Your answer successfully destroy!'
     end
@@ -21,7 +21,7 @@ feature 'User can delete answer' do
     scenario 'Another author delete answer' do
       sign_in(user)
       visit question_path(question)
-      click_on 'Delete answer'
+      click_on 'Delete'
 
       expect(page).to have_content 'Only author can delete this answer!'
     end

@@ -20,15 +20,15 @@ feature 'User can create question', '
     scenario 'asks a question' do
       fill_in 'Title', with: 'Test question'
       fill_in 'Body', with: 'text text text'
-      click_on 'Ask'
+      click_on 'Save'
 
       expect(page).to have_content 'Your question was succesfully created'
       expect(page).to have_content 'All questions:'
       expect(page).to have_content 'Test question'
     end
 
-    scenario 'asks a question with errors', :js do
-      click_on 'Ask'
+    scenario 'asks a question with errors' do
+      click_on 'Save'
 
       expect(page).to have_content "Title can't be blank"
       expect(page).to have_content "Body can't be blank"

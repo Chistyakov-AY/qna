@@ -11,7 +11,7 @@ feature 'User can delete question' do
     scenario 'Author delete his question' do
       sign_in(author)
       visit question_path(question)
-      click_on 'Delete question'
+      click_on 'Delete'
 
       expect(page).to have_content 'Your question was succesfully destroy!'
     end
@@ -19,7 +19,7 @@ feature 'User can delete question' do
     scenario 'Another author delete question' do
       sign_in(user)
       visit question_path(question)
-      click_on 'Delete question'
+      click_on 'Delete'
 
       expect(page).to have_content 'Only author can delete this question!'
     end

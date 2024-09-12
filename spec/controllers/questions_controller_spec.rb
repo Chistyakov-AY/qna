@@ -107,7 +107,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirects to updated question' do
         patch :update, params: { id: question, question: attributes_for(:question) }
-        expect(response).to redirect_to question
+        expect(response).to redirect_to @question
       end
     end
 

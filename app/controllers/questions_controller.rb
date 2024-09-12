@@ -8,7 +8,9 @@ class QuestionsController < ApplicationController
     @questions = Question.all
   end
 
-  def show; end
+  def show
+    @answer = Answer.new
+  end
 
   def new
     @question = Question.new
@@ -17,7 +19,7 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def create
-    @question = current_user.questions.new(question_params)
+    @question = current_user.questions.create(question_params)
 
     if @question.save
       redirect_to questions_path, notice: 'Your question was succesfully created'
@@ -27,10 +29,11 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if @question.update(question_params)
+    if current_user.author_of?(@question)
+      @question.update(question_params)
       redirect_to @question
     else
-      render :edit
+      render :edit, notice: 'Only author can update this question!'
     end
   end
 

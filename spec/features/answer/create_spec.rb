@@ -4,7 +4,7 @@ require 'rails_helper'
 
 feature 'User create answer' do
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  given!(:question) { create(:question) }
 
   describe 'Authenticated user' do
     background do
@@ -13,21 +13,24 @@ feature 'User create answer' do
       visit question_path(question)
     end
 
-    scenario 'create answer', :js do
+    scenario 'create answer', js: true do
       fill_in 'Body', with: 'answer answer answer'
       click_on 'Create answer'
 
       expect(page).to have_content 'Answer was succesfully created'
-      expect(page).to have_content 'answer answer answer'
+      expect(current_path).to eq question_path(question)
+      within '.answers' do
+        expect(page).to have_content 'answer answer answer'
+      end
     end
 
-    scenario 'create answer with errors', :js do
+    scenario 'create answer with errors', js: true do
       click_on 'Create answer'
       expect(page).to have_content "Body can't be blank"
     end
   end
 
-  scenario 'Unauthenticated user tries to ask a question', :js do
+  scenario 'Unauthenticated user tries to ask a question', js: true do
     visit question_path(question)
     click_on 'Create answer'
 

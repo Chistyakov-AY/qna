@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :answer do
     body { 'Test answer' }
-    question { association :question }
+    question #{ association :question }
     author { association :user }
 
     trait :invalid do
