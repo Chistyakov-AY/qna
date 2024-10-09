@@ -16,6 +16,7 @@ gem 'rubocop-rspec'
 gem 'slim-rails'
 gem 'hotwire-rails'
 gem 'jquery-rails'
+gem "sassc-rails"
 
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]
