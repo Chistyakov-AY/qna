@@ -8,7 +8,11 @@ Rails.application.routes.draw do
   root to: 'questions#index'
 
   resources :questions, shallow: true do
-    resources :answers, only: [:new, :create, :destroy]
+    resources :answers do
+      member do
+        patch :set_best, to: 'answers#set_best'
+      end
+    end
   end
 
   get 'up' => 'rails/health#show', as: :rails_health_check

@@ -1,34 +1,30 @@
-# frozen_string_literal: true
-
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_answer, only: :destroy
-  before_action :find_question, except: [:show, :destroy, :new]
-
-  # def show; end
-
-  def new
-    @answer = Answer.new
-  end
-
-  # def edit; end
+  before_action :find_question, only: :create
+  before_action :find_answer, only: [:destroy, :update]
 
   def create
-    @answer = @question.answers.create(answer_params)
+    @answer = @question.answers.new(answer_params)
     @answer.author = current_user
-    if @answer.save
-      redirect_to question_path(@question), notice: 'Answer was succesfully created'
+    @answer.save
+  end
+
+  def update
+    if answer_params.include?(:best) 
+       @answer.mark_as_best if question_author?
     else
-      redirect_to @question, notice: "Body can't be blank"
+      @answer.update(answer_params)
     end
+
+    @question = @answer.question
   end
 
   def destroy
-    if current_user.author_of?(@answer)
+    if @answer.author == current_user
       @answer.destroy
-      redirect_to question_path(@answer.question), notice: 'Your answer successfully destroy!'
+      flash[:notice] = 'Your answer was successfully deleted'
     else
-      redirect_to question_path(@answer.question), notice: 'Only author can delete this answer!'
+      flash[:notice] = "You could'n delete this answer"
     end
   end
 
@@ -43,6 +39,10 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, :best)
+  end
+
+  def question_author?
+    @answer.question.author == current_user
   end
 end

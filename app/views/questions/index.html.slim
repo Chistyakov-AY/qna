@@ -1,7 +1,6 @@
-h3="All questions:"
-
-- @questions.each do |question|
-  ul
-    li=link_to question.title, question_path(question)
+=render 'shared/errors', resource: @question
 
 p= link_to 'Ask question', new_question_path
+
+-@questions.each do |question|
+  p = link_to question.title, question_path(question), id: 'questions_list' 

@@ -1,0 +1,4 @@
+= form_with model: [@question, @answer], turbo: false, local: false do |f|
+  = f.label :body, 'Your answer'
+  = f.text_area :body
+  = f.submit 'Add Answer'
