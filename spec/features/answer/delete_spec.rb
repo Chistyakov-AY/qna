@@ -13,17 +13,16 @@ feature 'User can delete answer' do
       sign_in(author)
       visit question_path(question)
 
-      click_on 'Delete'
+      click_on 'Delete answer'
 
-      expect(page).to have_content 'Your answer successfully destroy!'
+      expect(page).to have_content 'Your answer was successfully deleted'
     end
 
     scenario 'Another author delete answer' do
       sign_in(user)
       visit question_path(question)
-      click_on 'Delete'
 
-      expect(page).to have_content 'Only author can delete this answer!'
+      expect(page).not_to have_link 'Delete answer'
     end
   end
 

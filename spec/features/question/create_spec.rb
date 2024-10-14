@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-feature 'User can create question', do
+feature 'User can create question' do
   given(:user) { create(:user) }
 
   describe 'Authenticated user' do
@@ -18,8 +18,8 @@ feature 'User can create question', do
       fill_in 'Body', with: 'text text text'
       click_on 'Save'
 
-      expect(page).to have_content 'Your question was succesfully created'
-      expect(page).to have_content 'All questions:'
+      expect(page).to have_content 'Your question successfully created'
+      expect(page).to have_content 'text text text'
       expect(page).to have_content 'Test question'
     end
 

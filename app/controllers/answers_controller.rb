@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :find_question, only: :create
@@ -10,8 +12,8 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if answer_params.include?(:best) 
-       @answer.mark_as_best if question_author?
+    if answer_params.include?(:best)
+      @answer.choose_the_best_answer if question_author?
     else
       @answer.update(answer_params)
     end

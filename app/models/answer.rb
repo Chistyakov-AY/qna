@@ -8,10 +8,10 @@ class Answer < ApplicationRecord
 
   scope :sort_by_best, -> { order(best: :desc) }
 
-  def mark_as_best
+  def choose_the_best_answer
     transaction do
-      self.class.where(question_id: self.question_id).update_all(best: false)
-      self.update(best: true)
+      self.class.where(question_id:).update_all(best: false)
+      update(best: true)
     end
   end
 end

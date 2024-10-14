@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 source 'https://rubygems.org'
 ruby '3.3.3'
 gem 'rails', '~> 7.1.1'
@@ -13,8 +14,8 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 gem 'bootsnap', require: false
 gem 'slim-rails'
 gem 'devise'
-gem "jquery-rails"
-gem "sass-rails"
+gem 'jquery-rails'
+gem 'sass-rails'
 
 gem 'decent_exposure', '~> 3.0'
 

@@ -143,3 +143,7 @@ RSpec/LetSetup:
   Enabled: false
 RSpec/ExampleLength:
   Enabled: false
+RSpec/ContextWording:
+  Enabled: false
+RSpec/NestedGroups:
+  Enabled: false
