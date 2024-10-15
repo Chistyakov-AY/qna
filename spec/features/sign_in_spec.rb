@@ -17,7 +17,7 @@ feature 'User can sign in', '
     click_on 'Log in'
 
     expect(page).to have_content 'Signed in successfully.'
-    expect(page).to have_content 'All questions:'
+    expect(page).to have_content 'Ask question'
   end
 
   scenario 'Unregistred user tries to sign in' do

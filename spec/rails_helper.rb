@@ -22,9 +22,11 @@ RSpec.configure do |config|
   config.include ControllerHelpers, type: :controller
   config.include FeatureHelpers, type: :feature
 
-  config.fixture_paths = [
-    Rails.root.join('spec/fixtures')
-  ]
+  Capybara.javascript_driver = :selenium_chrome_headless
+
+  # config.fixture_paths = [
+  #   Rails.root.join('spec/fixtures')
+  # ]
 
   config.use_transactional_fixtures = true
 

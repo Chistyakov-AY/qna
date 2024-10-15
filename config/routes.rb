@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # devise_for :users
-
   devise_for :users do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
 
-  root to: 'questions#index'
+  root 'questions#index'
 
   resources :questions, shallow: true do
-    resources :answers, only: [:show, :new, :edit, :create, :destroy]
+    resources :answers
   end
 
   get 'up' => 'rails/health#show', as: :rails_health_check

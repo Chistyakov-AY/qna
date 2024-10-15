@@ -2,13 +2,15 @@
 
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_question, only: [:show, :edit, :destroy, :update]
+  before_action :find_question, only: [:show, :edit, :update, :destroy]
 
   def index
     @questions = Question.all
   end
 
-  def show; end
+  def show
+    @answer = Answer.new
+  end
 
   def new
     @question = Question.new
@@ -17,39 +19,38 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def create
-    @question = current_user.questions.new(question_params)
+    @question = Question.new(question_params)
+    @question.author = current_user
 
     if @question.save
-      redirect_to questions_path, notice: 'Your question was succesfully created'
+      redirect_to @question, notice: 'Your question successfully created'
     else
       render :new
     end
   end
 
   def update
-    if @question.update(question_params)
-      redirect_to @question
-    else
-      render :edit
-    end
+    @question.update(question_params) if current_user.author_of?(@question)
   end
 
   def destroy
-    if current_user.author_of?(@question)
-      @question.destroy
-      redirect_to root_path, notice: 'Your question was succesfully destroy!'
+    if @question.author == current_user
+      @question.destroy!
+      flash[:notice] = 'Your question was successfully deleted'
+      redirect_to questions_path
     else
-      redirect_to question_path(@question), notice: 'Only author can delete a question!'
+      flash[:notice] = 'Only author can delete this question'
+      redirect_to @question
     end
   end
 
   private
 
-  def question_params
-    params.require(:question).permit(:title, :body)
+  def find_question
+    @question = Question.find(params[:id])
   end
 
-  def set_question
-    @question = Question.find(params[:id])
+  def question_params
+    params.require(:question).permit(:title, :body)
   end
 end

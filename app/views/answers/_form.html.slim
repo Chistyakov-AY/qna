@@ -1,6 +1,4 @@
-= render 'shared/errors', resource: @answer
-
-= form_for :answer, url: question_answers_path(@question), data: { turbo: false }, local: true do |f|
-  = f.label :body
+= form_with model: [@question, @answer], turbo: false, local: false do |f|
+  = f.label :body, 'Your answer'
   = f.text_area :body
   = f.submit 'Create answer'

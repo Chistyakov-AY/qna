@@ -2,37 +2,37 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_answer, only: :destroy
-  before_action :find_question, except: [:show, :destroy]
-
-  def show; end
-
-  def new
-    @answer = Answer.new
-  end
-
-  def edit; end
+  before_action :find_question, only: :create
+  before_action :find_answer, only: [:destroy, :update]
 
   def create
     @answer = @question.answers.new(answer_params)
     @answer.author = current_user
-    if @answer.save
-      redirect_to question_path(@question), notice: 'Answer was succesfully created'
-    else
-      redirect_to @question, notice: "Body can't be blank"
-    end
+    @answer.save
+  end
+
+  def update
+    @answer.update(answer_params) if !set_best
+
+    @question = @answer.question
   end
 
   def destroy
     if current_user.author_of?(@answer)
       @answer.destroy
-      redirect_to question_path(@answer.question), notice: 'Your answer successfully destroy!'
+      flash[:notice] = 'Your answer was successfully deleted'
     else
-      redirect_to question_path(@answer.question), notice: 'Only author can delete this answer!'
+      flash[:notice] = "You could'n delete this answer"
     end
   end
 
   private
+
+  def set_best
+    if answer_params.include?(:best) && question_author?
+      @answer.choose_the_best_answer
+    end
+  end
 
   def find_answer
     @answer = Answer.find(params[:id])
@@ -43,6 +43,10 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, :best)
+  end
+
+  def question_author?
+    current_user.author_of?(@answer.question)
   end
 end
