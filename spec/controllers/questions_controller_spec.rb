@@ -90,7 +90,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    before { login(user) }
+    before { login(author) }
 
     context 'with valid attributes' do
       it 'assigns the requested question to @question' do

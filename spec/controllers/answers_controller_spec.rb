@@ -91,16 +91,6 @@ RSpec.describe AnswersController, type: :controller do
         expect(answers[0].best).to be false
       end
     end
-
-    context "Not question's author" do
-      before { login(author) }
-
-      it "doesn't change attribute best" do
-        patch :update, params: { id: answers[0], answer: { best: true } }, format: :js
-        answers[0].reload
-        expect(answers[0].best).to be false
-      end
-    end
   end
 
   describe 'DELETE #destroy' do

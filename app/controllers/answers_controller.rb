@@ -12,17 +12,13 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if answer_params.include?(:best)
-      @answer.choose_the_best_answer if question_author?
-    else
-      @answer.update(answer_params)
-    end
+    @answer.update(answer_params) if !set_best
 
     @question = @answer.question
   end
 
   def destroy
-    if @answer.author == current_user
+    if current_user.author_of?(@answer)
       @answer.destroy
       flash[:notice] = 'Your answer was successfully deleted'
     else
@@ -31,6 +27,12 @@ class AnswersController < ApplicationController
   end
 
   private
+
+  def set_best
+    if answer_params.include?(:best) && question_author?
+      @answer.choose_the_best_answer
+    end
+  end
 
   def find_answer
     @answer = Answer.find(params[:id])
@@ -45,6 +47,6 @@ class AnswersController < ApplicationController
   end
 
   def question_author?
-    @answer.question.author == current_user
+    current_user.author_of?(@answer.question)
   end
 end

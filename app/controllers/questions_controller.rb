@@ -2,7 +2,7 @@
 
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_question, only: [:show, :edit, :update, :destroy]
+  before_action :find_question, only: [:show, :edit, :update, :destroy]
 
   def index
     @questions = Question.all
@@ -30,7 +30,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params)
+    @question.update(question_params) if current_user.author_of?(@question)
   end
 
   def destroy
@@ -46,7 +46,7 @@ class QuestionsController < ApplicationController
 
   private
 
-  def load_question
+  def find_question
     @question = Question.find(params[:id])
   end
 
