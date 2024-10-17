@@ -1,3 +1,6 @@
+- unless user_signed_in? 
+  p= link_to "Log in", new_user_session_path
+
 =render 'shared/errors', resource: @question
 
 p= link_to 'Ask question', new_question_path

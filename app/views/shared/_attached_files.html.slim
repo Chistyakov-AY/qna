@@ -1,0 +1,8 @@
+-if resource.files.attached?
+  -resource.files.each do |file|
+    =link_to file.filename.to_s, url_for(file), id: "link_file_#{file.id}"
+
+    p class= "delete_file_#{resource.id}" class= 'hidden'
+
+      =link_to 'Delete file', file_path(resource), method: :delete, data: {  confirm: ('Are you sure?'), remote: true }, id: "hide_delete_#{file.id}"
+      p=

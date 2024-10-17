@@ -1,12 +1,14 @@
 =render 'shared/errors', resource: @question
 
 = form_with model: @question do |f|
-  = f.label :title
-  = f.text_field :title
-  = f.label :body
-  = f.text_area :body
-  = f.label :files
-  p= f.file_field :files, multiple: true
-  = f.submit 'Save'
+  => f.label :title
+  => f.text_field :title
+
+  => f.label :body
+  => f.text_area :body
+  
+  => f.label :files, "Your files"
+  => f.file_field :files, multiple: true
+  => f.submit 'Save'
 
 p= link_to 'Back', questions_path

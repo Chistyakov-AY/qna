@@ -4,8 +4,6 @@ require_relative 'boot'
 
 require 'rails/all'
 
-# Require the gems listed in Gemfile, including any gems
-# you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
 # Comment
@@ -14,6 +12,8 @@ module Qna
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
+    config.active_storage.multiple_file_field_include_hidden = false
+    ActionView::Helpers::FormHelper.multiple_file_field_include_hidden = false
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
