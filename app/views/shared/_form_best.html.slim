@@ -1,0 +1,4 @@
+= form_with model: resource, class: 'hidden', html: { id: "best-answer-#{resource.id}" }, turbo: false, local: false do |f|
+    = f.label :best, "is this best answer?"
+    = f.check_box :best, id: "check_best_answer_#{resource.id}"
+    = f.submit "Confirm", id: "confirm_#{resource.id}"

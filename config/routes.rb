@@ -11,5 +11,7 @@ Rails.application.routes.draw do
     resources :answers
   end
 
+  resources :files, only: :destroy
+
   get 'up' => 'rails/health#show', as: :rails_health_check
 end

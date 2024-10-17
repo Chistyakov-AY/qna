@@ -1,0 +1,8 @@
+= form_with model: resource, class: 'hidden', html: { id: "edit-question-#{resource.id}" }, turbo: false, local: false do |f|
+  = f.label :title, "Title"
+  = f.text_area :title
+  = f.label :body, "Body"
+  = f.text_area :body
+  = f.label :files
+  = f.file_field :files, multiple: true
+  = f.submit 'Save'

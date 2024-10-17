@@ -51,5 +51,45 @@ feature 'User can edit his answer' do
         expect(page).to have_content "Body can't be blank"
       end
     end
+
+    scenario 'edits his answer with attached files', :js do
+      within '.answers' do
+        fill_in answer[body], with: 'edited answer'
+        attach_file 'answer_files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Save'
+
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+      end
+    end
+  end
+
+  describe 'with attached files' do
+    background do
+      sign_in author
+      answer.files.attach(io: File.open(Rails.root.join('spec', 'fixtures', 'temp.txt')), filename: 'temp.txt', content_type: 'text/txt')
+      visit question_path(question)
+      click_on 'Edit answer'
+    end
+
+    scenario 'can add files to his question', :js do
+      within '.answers' do
+        attach_file 'answer_files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Save'
+
+        expect(page).to have_link 'spec_helper.rb'
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'temp.txt'
+      end
+    end
+
+    scenario 'can delete attached files', :js do
+      within '.answers' do
+        click_on 'Delete file'
+        page.driver.browser.switch_to.alert.accept
+
+        expect(page).not_to have_link '1.txt'
+      end
+    end
   end
 end
