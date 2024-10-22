@@ -12,4 +12,8 @@ class User < ApplicationRecord
   def author_of?(resource)
     resource.author == self
   end
+
+  def author?(resource)
+    id == resource.author_id
+  end
 end

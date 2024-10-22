@@ -5,7 +5,7 @@ class AttachmentsController < ApplicationController
 
   def destroy
     @file = ActiveStorage::Attachment.find_by!(record_id: params[:id])
-    return unless author?
+    return unless current_user.author?(find_resource)
 
     @file.purge
   end
@@ -18,10 +18,5 @@ class AttachmentsController < ApplicationController
                 else
                   Question.find_by(id: params[:id])
                 end
-  end
-
-  def author?
-    find_resource
-    current_user == @resource.author
   end
 end
