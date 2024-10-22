@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe FilesController, type: :controller do
+RSpec.describe AttachmentsController, type: :controller do
   let(:user) { create(:user) }
   let(:author) { create(:user) }
   let(:question) { create(:question, author:) }

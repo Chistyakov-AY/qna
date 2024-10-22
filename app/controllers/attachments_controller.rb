@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-class FilesController < ApplicationController
+class AttachmentsController < ApplicationController
   before_action :authenticate_user!
 
   def destroy
-    @file = ActiveStorage::Attachment.find_by(record_id: params[:id])
+    @file = ActiveStorage::Attachment.find_by!(record_id: params[:id])
     return unless author?
 
     @file.purge

@@ -12,7 +12,7 @@ class AnswersController < ApplicationController
   end
 
   def update
-    attach_files
+    @answer.files.attach(params[:answer][:files]) if params[:answer][:files].present?
 
     @answer.update(update_answer_params) unless set_best
 
@@ -29,18 +29,6 @@ class AnswersController < ApplicationController
   end
 
   private
-
-  def need_to_attach_files?
-    params[:answer][:files].present?
-  end
-
-  def attach_files
-    return unless need_to_attach_files?
-
-    params[:answer][:files].each do |file|
-      @answer.files.attach(file)
-    end
-  end
 
   def set_best
     return unless answer_params.include?(:best) && question_author?

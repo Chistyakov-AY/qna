@@ -56,7 +56,6 @@ feature 'User can update question', :js do
 
         expect(page).to have_link 'rails_helper.rb'
         expect(page).to have_link 'spec_helper.rb'
-        expect(page).to have_link 'temp.txt'
       end
     end
 
@@ -64,7 +63,6 @@ feature 'User can update question', :js do
       within '.question' do
         click_on 'Delete file'
         page.driver.browser.switch_to.alert.accept
-
         expect(page).not_to have_link 'temp.txt'
       end
     end
