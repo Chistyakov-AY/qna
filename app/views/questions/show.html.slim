@@ -1,12 +1,10 @@
-.errors
-
 .question
   = render @question
 
 .answers
-  = render @question.answers.sort_by_best
+  = render @question.answers
 
-- if user_signed_in?
-  =render 'answers/form'
+.errors
+=render 'answers/form'
 
 p= link_to 'Back', questions_path

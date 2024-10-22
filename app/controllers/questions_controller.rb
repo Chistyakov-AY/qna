@@ -30,11 +30,13 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params) if current_user.author_of?(@question)
+    attach_files
+
+    @question.update(update_question_params)
   end
 
   def destroy
-    if @question.author == current_user
+    if current_user.author_of?(@question)
       @question.destroy!
       flash[:notice] = 'Your question was successfully deleted'
       redirect_to questions_path
@@ -47,10 +49,26 @@ class QuestionsController < ApplicationController
   private
 
   def find_question
-    @question = Question.find(params[:id])
+    @question = Question.with_attached_files.find(params[:id])
+  end
+
+  def need_to_attach_files?
+    params[:question][:files].present?
+  end
+
+  def attach_files
+    return unless need_to_attach_files?
+
+    params[:question][:files].each do |file|
+      @question.files.attach(file)
+    end
   end
 
   def question_params
+    params.require(:question).permit(:title, :body, files: [])
+  end
+
+  def update_question_params
     params.require(:question).permit(:title, :body)
   end
 end
