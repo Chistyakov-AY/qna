@@ -63,6 +63,7 @@ feature 'User can update question', :js do
       within '.question' do
         click_on 'Delete file'
         page.driver.browser.switch_to.alert.accept
+        
         expect(page).not_to have_link 'temp.txt'
       end
     end

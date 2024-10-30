@@ -10,10 +10,12 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    @answer.links.new
   end
 
   def new
     @question = Question.new
+    @question.links.new
   end
 
   def edit; end
@@ -65,7 +67,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [])
+    params.require(:question).permit(:title, :body, files: [], links_attributes: [:name, :url])
   end
 
   def update_question_params

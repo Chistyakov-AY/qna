@@ -14,5 +14,11 @@ p=
 
 -if current_user.present? && current_user.author_of?(@question) && answer.best != true
   = link_to 'Best answer', '#', class: 'best-answer-link', data: { answer_id: answer.id }, id: "best_answer_#{answer.id}"
+
+.links
+  p Links:
+  ul
+    - answer.links.each do |link|
+      li = link_to link.name, link.url
   
   =render 'shared/form_best', resource: answer
